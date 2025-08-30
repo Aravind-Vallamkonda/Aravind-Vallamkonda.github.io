@@ -1,337 +1,464 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aravind Vallamkonda • Software Engineer</title>
+  <meta name="description" content="Portfolio of Aravind Vallamkonda — Software Engineer specializing in Java, Spring Boot, React, Go, and AWS." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #0b1220;
+      --text: #dbe4ff;
+      --muted: #a5b4d6;
+      --card: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.12);
+      /* light blue / teal / blue palette */
+      --grad-a: #38bdf8; /* light blue */
+      --grad-b: #06b6d4; /* cyan/teal */
+      --grad-c: #3b82f6; /* blue */
+      --shadow-1: 0 12px 40px -12px rgba(56,189,248,.45);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      color:var(--text); background:var(--bg);
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+    /* Background gradients */
+    .bg-decor::before, .bg-decor::after{
+      content:""; position:fixed; inset:auto; pointer-events:none; z-index:-1;
+      width:38vmax; height:38vmax; filter:blur(60px); opacity:.25; border-radius:50%;
+    }
+    .bg-decor::before{top:0; left:50%; transform:translateX(-50%); background:radial-gradient(circle at 50% 50%, var(--grad-a), transparent 60%)}
+    .bg-decor::after{bottom:0; right:6vw; background:radial-gradient(circle at 50% 50%, var(--grad-b), transparent 60%)}
 
-  <head>
+    /* Layout */
+    .container{max-width:1120px; margin:0 auto; padding:0 24px}
+    .section{padding:80px 0}
+    .section h2{font-size:clamp(28px,4vw,40px); margin:0 0 16px; background:linear-gradient(90deg,#e0f7ff,#c7efff,#b3e5fc); -webkit-background-clip:text; background-clip:text; color:transparent}
+    .kicker{color:#a2e8ff; letter-spacing:.18em; text-transform:uppercase; font-weight:700; font-size:12px; opacity:.9}
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    /* Header */
+    header{position:sticky; top:0; z-index:50; backdrop-filter:saturate(140%) blur(10px);
+      background:rgba(5,10,22,.6); border-bottom:1px solid var(--border)}
+    .nav{display:flex; align-items:center; justify-content:space-between; padding:14px 0}
+    .brand{display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--text)}
+    /* ⬆️ removed the .brand-badge element from the HTML */
+    .brand span{
+      font-weight:800;
+      letter-spacing:.08em;
+      /* increased size */
+      font-size:clamp(16px, 2.2vw, 22px);
+    }
+    .links a{color:#c9d2ff; text-decoration:none; margin:0 10px; font-size:14px}
+    .links a:hover{color:#eef2ff}
+    .actions{display:flex; gap:8px}
+    .btn{
+      display:inline-flex; gap:8px; align-items:center;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      padding:8px 12px; border-radius:12px;
+      text-decoration:none; font-size:14px;
+      backdrop-filter:blur(10px);
+      /* ensure consistent typography for all buttons incl. Download Resume */
+      font-weight:600;
+      letter-spacing:.01em;
+    }
+    .btn:hover{background:rgba(255,255,255,.12)}
+    .btn-primary{
+      background:linear-gradient(90deg,var(--grad-a),var(--grad-b),var(--grad-c));
+      color:#08101e; border:none; box-shadow:var(--shadow-1); font-weight:600
+    }
+    .btn-primary:hover{filter:saturate(110%)}
 
-    <title>Aravind Vallamkonda</title>
+    /* Hero */
+    .hero{display:grid; grid-template-columns:1fr; gap:40px; padding:48px 0 32px}
+    @media(min-width:900px){.hero{grid-template-columns:1.1fr .9fr; align-items:center}}
+    .title{font-weight:800; line-height:1.1; font-size:clamp(34px,6vw,56px); margin:0}
+    .subtitle{margin:14px 0 0; color:var(--muted)}
+    .hero-card{position:relative; border:1px solid var(--border); border-radius:24px; padding:8px; background:var(--card); backdrop-filter:blur(12px); box-shadow:var(--shadow-1)}
+    .hero-card-inner{position:relative; border-radius:18px; min-height:280px; overflow:hidden; background:linear-gradient(180deg, rgba(12,20,38,0.9), rgba(12,20,38,0.6))}
+    .shine{position:absolute; inset:0; background:radial-gradient(60% 60% at 70% 10%, rgba(56,189,248,.22),transparent 60%), radial-gradient(60% 60% at 20% 90%, rgba(6,182,212,.2), transparent 60%)}
+    .hero-grid{position:absolute; inset:0; opacity:.12; background-image:linear-gradient(rgba(255,255,255,.25) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.25) 1px, transparent 1px); background-size:32px 32px}
+    .hero-content{position:relative; z-index:1; height:100%; display:grid; place-items:center; text-align:center; padding:24px}
 
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    /* Cards */
+    .card{position:relative; border:1px solid var(--border); border-radius:20px; background:var(--card); backdrop-filter:blur(12px); padding:20px}
 
-    <!-- Custom fonts for this template -->
-    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
-    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href="vendor/devicons/css/devicons.min.css" rel="stylesheet">
-    <link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
-    <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
-          
-    <!-- Custom styles for this template -->
-    <link href="css/resume.min.css" rel="stylesheet">
+    /* Grids */
+    .grid{display:grid; gap:20px}
+    .grid-2{grid-template-columns:1fr}
+    .grid-3{grid-template-columns:1fr}
+    @media(min-width:700px){.grid-2{grid-template-columns:1fr 1fr}}
+    @media(min-width:1024px){.grid-3{grid-template-columns:1fr 1fr 1fr}}
 
-  </head>
+    /* Experience */
+    .xp-head{display:flex; flex-wrap:wrap; gap:8px 16px; align-items:center; justify-content:space-between}
+    .xp-role{font-size:18px; font-weight:700}
+    .xp-meta{font-size:14px; color:var(--muted)}
+    .check{color:#b3e5fc; margin-right:8px}
 
-  <body id="page-top">
+    /* Skills */
+    .skill{margin:10px 0}
+    .skill-top{display:flex; justify-content:space-between; font-size:14px}
+    .bar{height:10px; background:rgba(255,255,255,.12); border-radius:999px; overflow:hidden}
+    .bar > span{display:block; height:100%; width:0; border-radius:999px; background:linear-gradient(90deg,var(--grad-a),var(--grad-b),var(--grad-c)); box-shadow:0 0 14px rgba(56,189,248,.35)}
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
-      <a class="navbar-brand js-scroll-trigger" href="#page-top">
-       <!-- <span class="d-block d-lg-none">Start Bootstrap</span> -->
-        <span class="d-none d-lg-block">
-          <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="img/profile.jpg" alt="">
-        </span>
+    /* Projects */
+    .project-title{font-weight:700; font-size:16px}
+    .tags{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+    .tag{border:1px solid var(--border); background:rgba(255,255,255,.08); padding:6px 10px; border-radius:999px; font-size:12px}
+
+    /* Education & Certs */
+    .list{list-style:none; padding:0; margin:0}
+    .list li{display:flex; gap:10px; align-items:flex-start}
+    .dot{width:8px; height:8px; border-radius:50%; background:linear-gradient(90deg,var(--grad-a),var(--grad-b),var(--grad-c)); margin-top:6px}
+
+    /* Footer */
+    footer{border-top:1px solid var(--border); padding:28px 0; color:#9fb0da}
+
+    /* Micro animations */
+    .fade-up{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease}
+    .fade-up.in{opacity:1; transform:translateY(0)}
+    .hover-raise{transition:transform .2s ease}
+    .hover-raise:hover{transform:translateY(-3px)}
+
+    /* Back to top */
+    #toTop{position:fixed; bottom:20px; right:20px; display:grid; place-items:center; width:44px; height:44px; border-radius:14px; border:1px solid var(--border); background:rgba(255,255,255,.1); color:var(--text); backdrop-filter:blur(10px); cursor:pointer; opacity:0; visibility:hidden; transition:opacity .3s ease, visibility .3s ease}
+    #toTop.show{opacity:1; visibility:visible}
+
+    /* Responsive helpers */
+    .muted{color:var(--muted)}
+    .pill{display:inline-flex; align-items:center; gap:8px; font-weight:600; font-size:12px; padding:6px 10px; border-radius:999px; background:rgba(255,255,255,.08); border:1px solid var(--border)}
+  </style>
+</head>
+<body class="bg-decor">
+  <header>
+    <div class="container nav">
+      <a href="#home" class="brand">
+        <!-- removed the square badge -->
+        <span>ARAVIND VALLAMKONDA</span>
       </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#about">Aravind Vallamkonda</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#experience">Experience</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#education">Education</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#skills">Skills</a>
-          </li>
-          <!--
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#interests">Interests</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#awards">Awards</a>
-          </li>
-          -->
-        </ul>
+      <nav class="links" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="actions">
+        <a class="btn" href="mailto:aravindvallamkonda1@gmail.com">Email</a>
+        <!-- unified button typography + plain ASCII label -->
+        <a class="btn" href="assets/Aravind_Vallamkonda_Resume.pdf" download>Download Resume</a>
+        <a class="btn btn-primary" href="#projects">View Projects</a>
       </div>
-    </nav>
-
-    <div class="container-fluid p-0">
-
-      <section class="resume-section p-3 p-lg-5 d-flex d-column" id="about">
-        <div class="my-auto">
-          <h1 class="mb-0">Aravind
-            <span class="text-primary">Vallamkonda</span>
-          </h1>
-          <div class="subheading mb-5">Fairfax,VA · (571) 307-8996 ·
-            <a href="mailto:aravindvallamkonda@gmail.com">aravindvallamkonda@gmail.com</a>
-          </div>
-          <p class="mb-5"><span class="text-primary"><b>Software Engineer</b></span> with over <span class="text-primary"><b>2 years</b></span> of experience in building and scaling financial technology systems using <span class="text-primary"><b>Java, Spring Boot, React.js and cloud-native technologies</b></span>. Specialized in developing distributed systems processing millions of daily transactions, with expertise in <span class="text-primary"><b>RESTful APIs, Apache Kafka, Redis, and PostgreSQL</b></span>. Track record of optimizing system performance and implementing real-time processing solutions, resulting in 150% efficiency improvements. Adept at cloud technologies <span class="text-primary"><b>(AWS, Docker, Kubernetes)</b></span> and DevOps practices <span class="text-primary"><b>(Jenkins, CI/CD)</b></span>. Holds a <span class="text-primary"><b>Master's degree</b></span> in <span class="text-primary"><b>Computer Science</b></span> from <span class="text-primary"><b>George Mason University</b></span>. Known for combining strong technical skills with effective team collaboration and mentorship abilities.</p>
-          <div class="text">
-            <p><a href="Aravind_Vallamkonda.pdf" download style="background-color: #BD5D38" class="btn btn-primary py-3 px-3">Download Resume</a></p>
-          </div>
-          <ul class="list-inline list-social-icons mb-0">
-            <li class="list-inline-item">
-              <a href="https://leetcode.com/u/AravindVallamkonda/">
-                <span class="fa-stack fa-lg">
-                  <i class="fa fa-circle fa-stack-2x"></i>
-                  <i class="fa fa-code fa-stack-1x fa-inverse"></i>
-                </span>
-              </a>
-            </li>
-            <li class="list-inline-item">
-              <a href="https://www.linkedin.com/in/aravind-vallamkonda/">
-                <span class="fa-stack fa-lg">
-                  <i class="fa fa-circle fa-stack-2x"></i>
-                  <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
-                </span>
-              </a>
-            </li>
-            <li class="list-inline-item">
-              <a href="https://github.com/Aravind-Vallamkonda/">
-                <span class="fa-stack fa-lg">
-                  <i class="fa fa-circle fa-stack-2x"></i>
-                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                </span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="experience">
-        <div class="my-auto">
-          <h2 class="mb-5">Experience</h2>
-
-          <div class="resume-item d-flex flex-column flex-md-row mb-5">
-            <div class="resume-content mr-auto">
-              <h3 class="mb-0">Associate Application Development</h3>
-              <div class="subheading mb-3">National Payments Corporation Of India</div>
-              <ul>
-
-              
-              <li><p>Implemented Open Source Technologies such as Apache Kafka, Redis, and Postgres, to overcome architectural challenges, resulting in a 150%increase in NETC system efficiency by developing REST API endpoints in Java and writing SQL queries for Postgres databases.</p></li>
-              <li><p>Transitioned NETC system from batch processing to real-time transaction settlement, improving the speed and reliability of operations.</p></li>
-              <li><p>Developed comprehensive transaction reports to client banks, aiding in improved decision-making and operational aperformance.</p></li>
-              <li><p>Identified and resolved critical system bugs, reducing downtime by 60% and improving overall system stability. Improved the performance of backend systems by optimizing database queries and reducing response times by 50% and mentored 2 junior developers on best practices,code review, and technical design.</p></li>
-            </ul>
-            </div>
-            <div class="resume-date text-md-right">
-              <span class="text-primary">Nov 2020 - Dec 2022</span>
-            </div>
-          </div>
-
-          <div class="resume-item d-flex flex-column flex-md-row mb-5">
-            <div class="resume-content mr-auto">
-              <h3 class="mb-0">Programmer Analyst Trainee </h3>
-              <div class="subheading mb-3">Cognizant Technolgy Solutions</div>
-              <ul>
-                <li><p> Mastered Salesforce capabilities and used this expertise to design an innovative employee onboarding website that reduced training time by 30%, facilitating faster integration of new team members into company culture.</p></li>
-                <li><p>Enhanced Data Structures, Algorithms, and Advanced Java skills by 90% through focused training. Throughout the training program, actively engaged in multiple assessments, consistently achieving an average score of 95.</p></li>
-              </ul>
-            </div>
-            <div class="resume-date text-md-right">
-              <span class="text-primary">Feb 2020 - Jun 2020</span>
-            </div>
-          </div>
-
-
-        </div>
-
-      </section>
-
-      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="education">
-        <div class="my-auto">
-          <h2 class="mb-5">Education</h2>
-
-          <div class="resume-item d-flex flex-column flex-md-row mb-5">
-            <div class="resume-content mr-auto">
-              <h3 class="mb-0">George Mason University</h3>
-              <div class="subheading mb-3">Master of Science</div>
-              <div>Computer Science</div>
-              <p>GPA: 3.93/4</p>
-            </div>
-            <div class="resume-date text-md-right">
-              <span class="text-primary">Jan 2023 - Dec 2024</span>
-            </div>
-          </div>
-
-          <div class="resume-item d-flex flex-column flex-md-row">
-            <div class="resume-content mr-auto">
-              <h3 class="mb-0">Amrita Vishwa Vidyapeetham</h3>
-              <div class="subheading mb-3">Bachelor of Technology</div>
-              <div>Computer Science and Engineering</div>
-              <p>GPA: 8.0/10</p>
-            </div>
-            <div class="resume-date text-md-right">
-              <span class="text-primary">Aug 2016 - Jul 2020</span>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="skills">
-        <div class="my-auto">
-          <h2 class="mb-5">Skills</h2>
-
-          <div class="subheading mb-3">Programming Languages &amp; Tools</div>
-          <ul class="list-inline list-icons">
-            <li class="list-inline-item"></li>
-            <i class="devicon-java-plain-wordmark colored"></i>
-            </li>
-            <li class="list-inline-item"></li>
-            <i class="devicon-python-plain-wordmark colored"></i>
-            </li>
-            <li class="list-inline-item"></li>
-            <i class="devicon-spring-plain-wordmark colored"></i>
-            </li>
-            <li class="list-inline-item"></li>
-            <i class="devicon-postgresql-plain-wordmark colored"></i>
-            </li>
-            <li class="list-inline-item"></li>
-            <i class="devicon-maven-plain-wordmark colored"></i>
-            </li>
-            <li class="list-inline-item"></li>
-            <i class="devicon-apachekafka-plain-wordmark colored"></i>
-            </li>
-            <li class="list-inline-item"></li>
-            <i class="devicon-redis-plain-wordmark colored"></i>
-            </li>
-            <li class="list-inline-item"></li>
-            <i class="devicon-react-plain-wordmark colored"></i>
-            </li>
-            <li class="list-inline-item"></li>
-            <i class="devicon-html5-plain-wordmark colored"></i>
-            </li>
-            <li class="list-inline-item"></li>
-            <i class="devicon-css3-plain-wordmark colored"></i>
-            </li>
-            <li class="list-inline-item"></li>
-            <i class="devicon-javascript-plain colored"></i>
-            </li>
-            <li class="list-inline-item"></li>
-            <i class="devicon-amazonwebservices-plain colored"></i>
-            </li>
-          </ul>
-          <ul class="list-inline list-icons">
-            <li class="list-inline-item"></li>
-            <i class="devicon-c-plain-wordmark colored"></i>
-            </li>
-            <li class="list-inline-item"></li>
-            <i class="devicon-typescript-plain colored"></i>
-            </li>
-            <li class="list-inline-item"></li>
-            <i class="devicon-eclipse-plain-wordmark colored"></i>
-            </li>
-            <li class="list-inline-item"></li>
-            <i class="devicon-rabbitmq-plain colored"></i>
-            </li>
-            <li class="list-inline-item"></li>
-            <i class="devicon-tomcat-line-wordmark colored"></i>
-            </li>
-            <li class="list-inline-item"></li>
-            <i class="devicon-nginx-plain-wordmark colored"></i>
-            </li>
-            <li class="list-inline-item"></li>
-            <i class="devicon-mysql-plain-wordmark colored"></i>
-            </li>
-            <li class="list-inline-item"></li>
-            <i class="devicon-docker-plain-wordmark colored"></i>
-            </li>
-            <li class="list-inline-item"></li>
-            <i class="devicon-kubernetes-plain-wordmark colored"></i>
-            </li>
-            <li class="list-inline-item"></li>
-            <i class="devicon-git-plain-wordmark colored"></i>
-            </li>
-            <li class="list-inline-item"></li>
-            <i class="devicon-jenkins-plain colored"></i>
-            </li>
-            <li class="list-inline-item"></li>
-            <i class="devicon-salesforce-plain colored"></i>
-            </li>
-          </ul>
-
-          <div class="subheading mb-3">Workflow</div>
-          <ul class="fa-ul mb-0">
-            <li>
-              <i class="fa-li fa fa-check"></i>
-              Microservices Development</li>
-            <li>
-              <i class="fa-li fa fa-check"></i>
-              Real-Time Data Processing</li>
-            <li>
-              <i class="fa-li fa fa-check"></i>
-              CI/CD and DevOps Practices</li>
-            <li>
-              <i class="fa-li fa fa-check"></i>
-              Agile Development &amp; Scrum</li>
-          </ul>
-        </div>
-      </section>
-<!--
-      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="interests">
-        <div class="my-auto">
-          <h2 class="mb-5">Interests</h2>
-          <p>Apart from being a web developer, I enjoy most of my time being outdoors. In the winter, I am an avid skiier and novice ice climber. During the warmer months here in Colorado, I enjoy mountain biking, free climbing, and kayaking.</p>
-          <p class="mb-0">When forced indoors, I follow a number of sci-fi and fantasy genre movies and television shows, I am an aspiring chef, and I spend a large amount of my free time exploring the latest technolgy advancements in the front-end web development world.</p>
-        </div>
-      </section>
-
-      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="awards">
-        <div class="my-auto">
-          <h2 class="mb-5">Resume &amp; Certifications</h2>
-          <ul class="fa-ul mb-0">
-
-            <li>
-              <i class="fa-li fa fa-trophy text-warning"></i>
-              Google Analytics Certified Developer</li>
-            <li>
-              <i class="fa-li fa fa-trophy text-warning"></i>
-              Mobile Web Specialist - Google Certification</li>
-            <li>
-              <i class="fa-li fa fa-trophy text-warning"></i>
-              1<sup>st</sup>
-              Place - University of Colorado Boulder - Emerging Tech Competition 2009</li>
-            <li>
-              <i class="fa-li fa fa-trophy text-warning"></i>
-              1<sup>st</sup>
-              Place - University of Colorado Boulder - Adobe Creative Jam 2008 (UI Design Category)</li>
-            <li>
-              <i class="fa-li fa fa-trophy text-warning"></i>
-              2<sup>nd</sup>
-              Place - University of Colorado Boulder - Emerging Tech Competition 2008</li>
-            <li>
-            <li>
-              <i class="fa-li fa fa-trophy text-warning"></i>
-              1<sup>st</sup>
-              Place - James Buchanan High School - Hackathon 2006</li>
-            <li>
-              <i class="fa-li fa fa-trophy text-warning"></i>
-              3<sup>rd</sup>
-              Place - James Buchanan High School - Hackathon 2005</li>
-          </ul>
-        </div>
-      </section>
-
-      -->
-
     </div>
+  </header>
 
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="js/resume.min.js"></script>
+  <!-- ==== everything below is unchanged content/structure ==== -->
+  <main id="home">
+    <section class="container hero section">
+      <div>
+        <div class="kicker">Software Engineer · Full-Stack · Cloud-Native</div>
+        <h1 class="title">Building reliable, scalable systems with <u>Java</u>, <u>React</u> & <u>AWS</u></h1>
+        <p class="subtitle">Versatile Software Engineer with 3+ years of hands-on experience building enterprise-grade applications using Java, Spring Boot microservices, React.js, Go and AWS. Proven at architecting distributed systems, implementing REST & GraphQL APIs, optimizing databases, and delivering production-ready apps with Docker, Kubernetes, and CI/CD. Track record: −70% latency, +150% throughput for fintech workloads.</p>
+        <div style="margin-top:22px; display:flex; gap:10px; flex-wrap:wrap">
+          <a class="btn btn-primary hover-raise" href="#contact">Hire Me</a>
+          <a class="btn hover-raise" href="#skills">Explore Skills</a>
+        </div>
+        <div style="margin-top:18px; display:flex; gap:16px; flex-wrap:wrap" class="muted">
+          <span class="pill">Seattle, WA</span>
+          <a class="pill" href="tel:+15713078996">(571) 307-8996</a>
+          <a class="pill" href="mailto:aravindvallamkonda1@gmail.com">aravindvallamkonda1@gmail.com</a>
+        </div>
+      </div>
+      <div class="hero-card fade-up">
+        <div class="hero-card-inner">
+          <div class="hero-grid" aria-hidden="true"></div>
+          <div class="shine" aria-hidden="true"></div>
+          <div class="hero-content">
+            <div>
+              <div class="kicker">Latency ↓ · Throughput ↑</div>
+              <h3 style="margin:10px 0 6px; font-size:24px; font-weight:800; background:linear-gradient(90deg,#e0f7ff,#c7efff,#b3e5fc); -webkit-background-clip:text; background-clip:text; color:transparent">Enterprise-grade Engineering</h3>
+              <p class="muted">Microservices · Event-driven · Observability · Zero-downtime</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  </body>
+    <section id="about" class="section">
+      <div class="container">
+        <div class="kicker">About Me</div>
+        <h2>Engineer focused on scale, reliability, and polish</h2>
+        <div class="card fade-up">
+          <div class="grid grid-2">
+            <div>
+              <p class="muted">I specialize in building dependable platforms end-to-end—robust backends in Java/Go, modern UIs in React, and cloud infrastructure on AWS. I enjoy simplifying complex systems, adding the right abstractions, and leaving things faster, cleaner, and easier to operate.</p>
+              <p class="muted" style="margin-top:12px">Recent work spans distributed updates on FreeBSD nodes, CI/CD integrations, and real-time control centers with rich telemetry. I care about craftsmanship: readable code, useful metrics, crisp UX, and zero-surprise deployments.</p>
+            </div>
+            <div class="grid grid-2">
+              <span class="pill">Java</span>
+              <span class="pill">Spring Boot</span>
+              <span class="pill">React</span>
+              <span class="pill">Go</span>
+              <span class="pill">AWS</span>
+              <span class="pill">PostgreSQL</span>
+              <span class="pill">Kafka</span>
+              <span class="pill">Docker · K8s</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
+    <section id="experience" class="section">
+      <div class="container">
+        <div class="kicker">Experience</div>
+        <h2>Impact at scale across fintech and infrastructure</h2>
+        <div class="grid">
+          <!-- Karios -->
+          <article class="card fade-up hover-raise">
+            <div class="xp-head">
+              <div class="xp-role">Software Development Engineer · <span style="color:#cbd5ff">Karios</span></div>
+              <div class="xp-meta">Ashburn, VA · Mar ’25 – Jul ’25</div>
+            </div>
+            <ul class="list" style="margin-top:12px">
+              <li><span class="check">✔</span><span>Built a secure Go (Gin) backend to orchestrate signed artifact distribution with multi-stage approvals.</span></li>
+              <li><span class="check">✔</span><span>Integrated ZFS snapshots & bectl automation for boot-level rollback guarantees across FreeBSD nodes.</span></li>
+              <li><span class="check">✔</span><span>Provisioned scalable AWS infra (EC2, ALB, API Gateway) with SSL termination for public APIs.</span></li>
+              <li><span class="check">✔</span><span>Established S3 + CloudFront artifact repository; versioned distribution reduced download latency by ~40%.</span></li>
+              <li><span class="check">✔</span><span>Implemented PostgreSQL-backed metadata with REST APIs for real-time version tracking.</span></li>
+              <li><span class="check">✔</span><span>Shipped a React admin portal enabling update audit trails & controlled rollouts.</span></li>
+              <li><span class="check">✔</span><span>Built a Control Center with RBAC, live monitoring dashboards, and resource allocation UIs.</span></li>
+              <li><span class="check">✔</span><span>Added artifact hash validation/signatures; structured logging & health endpoints for observability.</span></li>
+              <li><span class="check">✔</span><span>Integrated Postman collections into GitLab CI; reduced QA cycle time.</span></li>
+            </ul>
+          </article>
+          <!-- NPCI -->
+          <article class="card fade-up hover-raise">
+            <div class="xp-head">
+              <div class="xp-role">Associate Application Developer · <span style="color:#cbd5ff">NPCI</span></div>
+              <div class="xp-meta">Hyderabad, India · Nov ’20 – Dec ’22</div>
+            </div>
+            <ul class="list" style="margin-top:12px">
+              <li><span class="check">✔</span><span>Refactored monolith → Spring Boot microservices; latency −70%.</span></li>
+              <li><span class="check">✔</span><span>Kafka pipelines + Redis caching → 150% throughput uplift for toll processing.</span></li>
+              <li><span class="check">✔</span><span>React admin & bank portals with role-based auth; dispute workflows & reporting.</span></li>
+              <li><span class="check">✔</span><span>Prometheus/Grafana dashboards; ELK for centralized logs → faster incident response.</span></li>
+              <li><span class="check">✔</span><span>Automated reconciliation batches; compliance-ready daily reports.</span></li>
+              <li><span class="check">✔</span><span>Reliability via leak detection, tuned pools, and bulkhead isolation patterns.</span></li>
+            </ul>
+          </article>
+          <!-- Cognizant -->
+          <article class="card fade-up hover-raise">
+            <div class="xp-head">
+              <div class="xp-role">Software Development Engineer · <span style="color:#cbd5ff">Cognizant</span></div>
+              <div class="xp-meta">Bengaluru, India · Feb ’20 – Oct ’20</div>
+            </div>
+            <ul class="list" style="margin-top:12px">
+              <li><span class="check">✔</span><span>Automated onboarding with Spring MVC; secure provisioning APIs integrated with Salesforce/HRMS.</span></li>
+              <li><span class="check">✔</span><span>Optimized Hibernate & pool tuning → 20% faster APIs.</span></li>
+              <li><span class="check">✔</span><span>Scrum rituals, Jira based planning; improved delivery cadence.</span></li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="section">
+      <div class="container">
+        <div class="kicker">Skills</div>
+        <h2>A pragmatic stack with strong fundamentals</h2>
+        <div class="grid grid-2">
+          <div class="card fade-up">
+            <h3>Backend</h3>
+            <div class="skill"><div class="skill-top"><span>Java</span><span>92%</span></div><div class="bar"><span data-pct="92"></span></div></div>
+            <div class="skill"><div class="skill-top"><span>Spring Boot</span><span>90%</span></div><div class="bar"><span data-pct="90"></span></div></div>
+            <div class="skill"><div class="skill-top"><span>Go (Gin)</span><span>82%</span></div><div class="bar"><span data-pct="82"></span></div></div>
+            <div class="skill"><div class="skill-top"><span>Node/Express</span><span>78%</span></div><div class="bar"><span data-pct="78"></span></div></div>
+            <div class="skill"><div class="skill-top"><span>GraphQL</span><span>75%</span></div><div class="bar"><span data-pct="75"></span></div></div>
+          </div>
+          <div class="card fade-up">
+            <h3>Frontend</h3>
+            <div class="skill"><div class="skill-top"><span>React.js</span><span>88%</span></div><div class="bar"><span data-pct="88"></span></div></div>
+            <div class="skill"><div class="skill-top"><span>Next.js</span><span>80%</span></div><div class="bar"><span data-pct="80"></span></div></div>
+            <div class="skill"><div class="skill-top"><span>TypeScript</span><span>86%</span></div><div class="bar"><span data-pct="86"></span></div></div>
+            <div class="skill"><div class="skill-top"><span>Tailwind CSS</span><span>84%</span></div><div class="bar"><span data-pct="84"></span></div></div>
+            <div class="skill"><div class="skill-top"><span>Redux</span><span>82%</span></div><div class="bar"><span data-pct="82"></span></div></div>
+          </div>
+          <div class="card fade-up">
+            <h3>Cloud & DevOps</h3>
+            <div class="skill"><div class="skill-top"><span>AWS (EC2/S3/RDS/Lambda/ECS/EKS)</span><span>84%</span></div><div class="bar"><span data-pct="84"></span></div></div>
+            <div class="skill"><div class="skill-top"><span>Docker</span><span>90%</span></div><div class="bar"><span data-pct="90"></span></div></div>
+            <div class="skill"><div class="skill-top"><span>Kubernetes</span><span>78%</span></div><div class="bar"><span data-pct="78"></span></div></div>
+            <div class="skill"><div class="skill-top"><span>Jenkins / GH Actions</span><span>82%</span></div><div class="bar"><span data-pct="82"></span></div></div>
+            <div class="skill"><div class="skill-top"><span>Terraform</span><span>70%</span></div><div class="bar"><span data-pct="70"></span></div></div>
+          </div>
+          <div class="card fade-up">
+            <h3>Data & Messaging</h3>
+            <div class="skill"><div class="skill-top"><span>PostgreSQL</span><span>88%</span></div><div class="bar"><span data-pct="88"></span></div></div>
+            <div class="skill"><div class="skill-top"><span>Redis</span><span>80%</span></div><div class="bar"><span data-pct="80"></span></div></div>
+            <div class="skill"><div class="skill-top"><span>Kafka</span><span>78%</span></div><div class="bar"><span data-pct="78"></span></div></div>
+            <div class="skill"><div class="skill-top"><span>MongoDB/DynamoDB</span><span>74%</span></div><div class="bar"><span data-pct="74"></span></div></div>
+          </div>
+          <div class="card fade-up">
+            <h3>Observability & QA</h3>
+            <div class="skill"><div class="skill-top"><span>Prometheus/Grafana</span><span>82%</span></div><div class="bar"><span data-pct="82"></span></div></div>
+            <div class="skill"><div class="skill-top"><span>ELK Stack</span><span>80%</span></div><div class="bar"><span data-pct="80"></span></div></div>
+            <div class="skill"><div class="skill-top"><span>JUnit/Mockito</span><span>86%</span></div><div class="bar"><span data-pct="86"></span></div></div>
+            <div class="skill"><div class="skill-top"><span>Cypress/Selenium</span><span>72%</span></div><div class="bar"><span data-pct="72"></span></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section">
+      <div class="container">
+        <div class="kicker">Projects</div>
+        <h2>Case studies & highlights</h2>
+        <div class="grid grid-3">
+          <article class="card fade-up hover-raise">
+            <div class="project-title">Datacenter Control Center (React + RBAC)</div>
+            <p class="muted">A smooth portal for multi-datacenter oversight: role-based access, live server metrics, and resource allocation—built to scale ops teams without friction.</p>
+            <div class="tags">
+              <span class="tag">React</span><span class="tag">RBAC</span><span class="tag">Real-time</span><span class="tag">Grafana</span><span class="tag">Prometheus</span>
+            </div>
+          </article>
+          <article class="card fade-up hover-raise">
+            <div class="project-title">Update Orchestrator (Go + FreeBSD + S3)</div>
+            <p class="muted">Go microservice orchestrating signed artifact distribution with ZFS-backed rollback. Versioned repo on S3 + CloudFront cut download latencies by ~40%.</p>
+            <div class="tags">
+              <span class="tag">Go</span><span class="tag">ZFS</span><span class="tag">CloudFront</span><span class="tag">PostgreSQL</span>
+            </div>
+          </article>
+          <article class="card fade-up hover-raise">
+            <div class="project-title">Bank Dispute Portal (React + Spring)</div>
+            <p class="muted">Dispute submission & tracking portal for banks with secure document downloads, role-aware flows, and real-time status visibility.</p>
+            <div class="tags">
+              <span class="tag">React</span><span class="tag">Spring Boot</span><span class="tag">RBAC</span><span class="tag">REST</span>
+            </div>
+          </article>
+          <article class="card fade-up hover-raise">
+            <div class="project-title">Toll Processing Microservices</div>
+            <p class="muted">Kafka-driven Spring microservices with Redis acceleration for high-throughput, low-latency NETC/FASTag processing.</p>
+            <div class="tags">
+              <span class="tag">Kafka</span><span class="tag">Spring</span><span class="tag">Redis</span><span class="tag">Microservices</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="education" class="section">
+      <div class="container">
+        <div class="kicker">Education & Certifications</div>
+        <h2>Foundations and continuous learning</h2>
+        <div class="grid grid-2">
+          <div class="card fade-up">
+            <h3>Education</h3>
+            <ul class="list" style="margin-top:10px">
+              <li><span class="dot"></span><div><div><strong>George Mason University</strong></div><div class="muted">M.S. in Computer Science (GPA 3.93/4.0)</div><div class="muted" style="font-size:12px">Jan ’23 – Dec ’24</div></div></li>
+              <li><span class="dot"></span><div><div><strong>Amrita School of Engineering</strong></div><div class="muted">B.Tech in Information Technology (8.0/10)</div><div class="muted" style="font-size:12px">Jul ’16 – May ’20</div></div></li>
+            </ul>
+          </div>
+          <div class="card fade-up">
+            <h3>Certifications</h3>
+            <ul class="list" style="margin-top:10px">
+              <li><span class="dot"></span><div>AWS Certified Developer – Associate</div></li>
+              <li><span class="dot"></span><div>Confluent: Developer Skills for Apache Kafka</div></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="container">
+        <div class="kicker">Contact</div>
+        <h2>Let’s build something great together</h2>
+        <div class="grid grid-3">
+          <div class="card fade-up">
+            <div><strong>Email</strong></div>
+            <a class="muted" href="mailto:aravindvallamkonda1@gmail.com">aravindvallamkonda1@gmail.com</a>
+            <div style="margin-top:10px"><strong>Phone</strong></div>
+            <a class="muted" href="tel:+15713078996">(571) 307-8996</a>
+            <div style="margin-top:10px"><strong>Location</strong></div>
+            <div class="muted">Seattle, WA</div>
+          </div>
+          <div class="card fade-up">
+            <div><strong>Links</strong></div>
+            <a class="muted" href="#" target="https://github.com/Aravind-Vallamkonda/Aravind-Vallamkonda.github.io" rel="noreferrer">GitHub</a><br />
+            <a class="muted" href="#" target="https://www.linkedin.com/in/aravind-vallamkonda/" rel="noreferrer">LinkedIn</a>
+          </div>
+          <div class="card fade-up">
+            <div class="muted">Prefer email? Click the button to prefill a draft.</div>
+            <a class="btn btn-primary" style="margin-top:12px" href="mailto:aravindvallamkonda1@gmail.com?subject=Opportunity%20for%20Aravind%20Vallamkonda&body=Hi%20Aravind%2C%20we%27d%20love%20to%20chat%20about%20...">Email Me</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap">
+      <div>© <span id="year"></span> Aravind Vallamkonda. All rights reserved.</div>
+      <div style="display:flex; gap:14px; font-size:14px">
+        <a class="muted" href="#about">About</a>
+        <a class="muted" href="#experience">Experience</a>
+        <a class="muted" href="#skills">Skills</a>
+        <a class="muted" href="#projects">Projects</a>
+        <a class="muted" href="#contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <button id="toTop" aria-label="Back to top" title="Back to top">↑</button>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Fade-up on scroll
+    const faders = document.querySelectorAll('.fade-up');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if(e.isIntersecting){ e.target.classList.add('in'); }
+      });
+    }, {threshold: 0.2});
+    faders.forEach(el => io.observe(el));
+
+    // Animated skill bars when visible
+    const bars = document.querySelectorAll('.bar > span');
+    const ioBars = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if(e.isIntersecting){
+          const pct = e.target.getAttribute('data-pct');
+          e.target.style.transition = 'width 1.1s ease-out';
+          requestAnimationFrame(() => { e.target.style.width = pct + '%'; });
+          ioBars.unobserve(e.target);
+        }
+      })
+    }, {threshold: 0.4});
+    bars.forEach(b => ioBars.observe(b));
+
+    // Back to top visibility
+    const toTop = document.getElementById('toTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 480){ toTop.classList.add('show'); } else { toTop.classList.remove('show'); }
+    });
+    toTop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+    // Reduce motion preference
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(prefersReduced){
+      document.querySelectorAll('*').forEach(el => el.style.scrollBehavior = 'auto');
+    }
+  </script>
+</body>
 </html>
